@@ -1,0 +1,277 @@
+class CountSorting
+    {
+        //Крайне плохо работает на массивах, где значения с огромной разницей между друг другом
+        //Не работает, если числа есть одинаковые
+
+        public static void MainSort()
+        {
+            int[] array = { 5, 3, 6, 4, 2, 9, 1, 8, 7 }; //Массив
+            //int[] array = { 10, 10, 6, 10, 6, 2 };
+            CountingSort(array);
+            string str = "";
+            foreach (int a in array) { str += a.ToString() + ", "; }
+            Console.WriteLine("Sorted: " + str);
+            return;
+        }
+
+
+        private static void CountingSort(int[] arr)
+        {
+
+            int max = arr.Max();
+            int min = arr.Min();
+
+            int[] count = new int[max - min + 1];
+            for (int i = 0; i < count.Length; i++) { count[i] = 0; }
+            int z = 0;
+
+            
+            for (int i = 0; i < arr.Length; i++) //подсчёт
+            {
+                count[arr[i] - min]++;
+            }
+
+            for (int i = min; i < max; i++)
+            {
+                while (count[i - min]-- > 0)
+                {
+                    arr[z] = i;
+                    z++;
+                }
+            }
+            arr[arr.Length - 1] = max;
+        }
+    }
+    public class FastSorting
+    {
+        static int counter = 0;
+
+        public static void MainSort()
+        {
+            int[] array = { 5, 3, 6, 4, 2, 9, 1, 8, 7 }; //Массив
+            QuickSort(array);
+            string str = "";
+            foreach (int a in array) { str += a.ToString(); }
+            Console.WriteLine("Sorted: " + str);
+            return;
+        }
+
+
+        static void QuickSort(int[] a) //Функция для создания start и end эллемента
+        {
+            QuickSort(a, 0, a.Length - 1);
+        }
+
+
+        static void QuickSort(int[] array, int start, int end)
+        {
+            if (start >= end)
+            {
+                return;
+            }
+            int pivot = partition(array, start, end); //Вызов функции определения маркера
+            QuickSort(array, start, pivot - 1);
+            QuickSort(array, pivot + 1, end);
+        }
+
+
+        static int partition(int[] array, int start, int end)  //Функция определения маркера
+        {
+            /* //test material */
+            counter++;
+            string str = " ";
+            foreach (int a in array) { str += a.ToString(); }
+            Console.WriteLine("Iter #" + counter.ToString() + str + " Start - " + start.ToString() + " End - " + end.ToString());
+
+
+            int temp;
+            int marker = start;  //Ищем где менять
+            for (int i = start; i < end; i++)
+            {
+                if (array[i] < array[end]) //array[end] is pivot
+                {
+                    temp = array[marker]; // swap
+                    array[marker] = array[i];
+                    array[i] = temp;
+                    marker += 1;
+                }
+            }
+            temp = array[marker];
+            array[marker] = array[end];
+            array[end] = temp;
+            return marker;
+        }
+    }
+    class GnomeSorting
+    {
+        public static void MainSort()
+        {
+            int[] array = { 5, 3, 6, 4, 2, 9, 1, 8, 7 }; //Массив
+            //int[] array = { 10, 10, 6, 10, 6, 2 };
+            GnomeSort(array);
+            string str = "";
+            foreach (int a in array) { str += a.ToString() + ", "; }
+            Console.WriteLine("Sorted: " + str);
+            return;
+        }
+
+        static void GnomeSort(int[] inArray)
+        {
+            int i = 1;
+            int j = 2;
+            while (i < inArray.Length)
+            {
+                if (inArray[i - 1] < inArray[i])
+                {
+                    i = j;
+                    j += 1;
+                }
+                else
+                {
+                    Swap(inArray, i - 1, i);
+                    i -= 1;
+                    if (i == 0)
+                    {
+                        i = j;
+                        j += 1;
+                    }
+                }
+            }
+        }
+
+        //перестановка местами двух элементов в массиве
+        static void Swap(int[] array, int i, int j)
+        {
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+    
+    public class MergeSorting
+    {
+        //Сортируемый массив разбивается на две части примерно одинакового размера;
+        //Каждая из получившихся частей сортируется отдельно, например — тем же самым алгоритмом;
+        //Два упорядоченных массива половинного размера соединяются в один.
+
+        public static void MainSort()
+        {
+            Console.WriteLine("Merge Sort");
+            int[] array = { 5, 3, 6, 4, 2, 9, 1, 8, 7 }; //Массив
+            Console.WriteLine("Sorted: {0}", string.Join(", ", MergeSort(array)));
+            return;
+        }
+
+        //метод для слияния массивов
+        static void Merge(int[] array, int lowIndex, int middleIndex, int highIndex)
+        {
+            var left = lowIndex;
+            var right = middleIndex + 1;
+            var tempArray = new int[highIndex - lowIndex + 1];
+            var index = 0;
+
+            while ((left <= middleIndex) && (right <= highIndex))
+            {
+                if (array[left] < array[right])
+                {
+                    tempArray[index] = array[left];
+                    left++;
+                }
+                else
+                {
+                    tempArray[index] = array[right];
+                    right++;
+                }
+
+                index++;
+            }
+
+            for (var i = left; i <= middleIndex; i++)
+            {
+                tempArray[index] = array[i];
+                index++;
+            }
+
+            for (var i = right; i <= highIndex; i++)
+            {
+                tempArray[index] = array[i];
+                index++;
+            }
+
+            for (var i = 0; i < tempArray.Length; i++)
+            {
+                array[lowIndex + i] = tempArray[i];
+            }
+        }
+
+        //сортировка слиянием
+        static int[] MergeSort(int[] array, int lowIndex, int highIndex)
+        {
+            if (lowIndex < highIndex)
+            {
+                var middleIndex = (lowIndex + highIndex) / 2;
+                MergeSort(array, lowIndex, middleIndex);
+                MergeSort(array, middleIndex + 1, highIndex);
+                Merge(array, lowIndex, middleIndex, highIndex);
+            }
+
+            return array;
+        }
+
+        static int[] MergeSort(int[] array)
+        {
+            return MergeSort(array, 0, array.Length - 1);
+        }
+
+    }
+    
+    
+    class RadixSorting
+    {
+        public static void MainSort()
+        {
+            int[] array = { 5, 3, 6, 4, 2, 9, 1, 8, 7 }; //Массив
+            //int[] array = { 10, 10, 6, 10, 6, 2 };
+            sorting(array);
+            string str = "";
+            foreach (int a in array) { str += a.ToString() + ", "; }
+            Console.WriteLine("Sorted: " + str);
+            return;
+        }
+
+        public static void sorting(int[] array)
+        {
+            sorting(array, 10, 2);
+        }
+
+        public static void sorting(int[] arr, int range, int length)
+        {
+            ArrayList[] lists = new ArrayList[range];
+            for (int i = 0; i < range; i++)
+                lists[i] = new ArrayList();
+
+            for (int step = 0; step < length; step++)
+            {
+                //распределение по спискам
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    int temp = (arr[i] % (int)Math.Pow(range, step + 1)) /
+                                                  (int)Math.Pow(range, step);
+                    lists[temp].Add(arr[i]);
+                }
+                //сборка
+                int k = 0;
+                for (int i = 0; i < range; i++)
+                {
+                    for (int j = 0; j < lists[i].Count; j++)
+                    {
+                        arr[k++] = (int)lists[i][j];
+                    }
+                }
+                for (int i = 0; i < range; i++)
+                    lists[i].Clear();
+            }
+        }
+
+    }
+    
