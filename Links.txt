@@ -1,0 +1,12 @@
+https://github.com/TI2042/gos/raw/master/BinaryTree.txt - АИСД бинарное дерево
+https://github.com/TI2042/gos/raw/master/CircleList.txt - АИСД кольцевой связный список
+https://github.com/TI2042/gos/raw/master/DoubleLinkedList.txt - АИСД двусвязный списко
+https://github.com/TI2042/gos/raw/master/Graph.txt - АИСД графы
+https://github.com/TI2042/gos/raw/master/HashTable.txt - АИСД хэш
+https://github.com/TI2042/gos/raw/master/OP.txt - ОП
+https://github.com/TI2042/gos/raw/master/Sort.txt - АИСД сортирвки 
+https://github.com/TI2042/gos/raw/master/TP.txt - ТП
+https://github.com/TI2042/gos/raw/master/android.txt - АНДРОИД
+
+curl -LO https://github.com/TI2042/gos/raw/master/BinaryTree.txt
+curl  https://github.com/TI2042/gos/raw/master/BinaryTree.txt -O file.txt
