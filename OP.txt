@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+//node declaration for doubly linked list
+struct Node {
+	int data;
+	struct Node* prev, * next;
+};
+
+
+
+Node* newNode(int val)
+{
+	Node* temp = new Node;
+	temp->data = val;
+	temp->prev = temp->next = nullptr;
+	return temp;
+}
+void displayList(Node* head)
+{
+	while (head->next != nullptr) {
+		cout << head->data << " <==> ";
+		head = head->next;
+	}
+	cout << head->data << endl;
+}
+
+// Insert a new node at the head of the list
+void push_head(Node** head, int node_data)
+{
+	Node* temp = newNode(node_data);
+	temp->next = *head;
+	(*head)->prev = temp;
+	(*head) = temp;
+}
+void push_back(Node** head, int node_data)
+{
+	Node* temp = newNode(node_data);
+	Node* tmp = (*head);
+	while (tmp->next != NULL)
+	{
+		tmp = tmp->next;
+	}
+	temp->prev = tmp;
+	tmp->next = temp;
+}
+
+void push_center(Node** list, int data, int len)
+{
+	Node* newElement = newNode(data);
+
+	Node* tmp = *list;
+	int count = 0;
+
+	while (count < len / 2 - 1 && tmp->next != 0) {
+		tmp = tmp->next;
+		count++;
+	}
+
+	newElement->next = tmp->next;
+	tmp->next = newElement;
+}
+
+int GetSize(Node** list) {
+	Node* tmp = *list;
+	int count = 1;
+	while (tmp->next != 0) {
+		tmp = tmp->next;
+		count++;
+	}
+	return count;
+}
+
+int main()
+{
+	Node* headNode = newNode(5);
+	push_head(&headNode, 4);
+	push_head(&headNode, 3);
+	push_head(&headNode, 2);
+	push_head(&headNode, 1);
+	push_back(&headNode, 6);
+	push_center(&headNode, 10,GetSize(&headNode));
+	push_center(&headNode, 15, GetSize(&headNode));
+	push_center(&headNode, 17, GetSize(&headNode));
+	push_center(&headNode, 155, GetSize(&headNode));
+	cout << "Original doubly linked list: " << endl;
+	displayList(headNode);
+
+
+	return 0;
+}
